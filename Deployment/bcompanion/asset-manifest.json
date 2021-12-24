@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/myrzabek/bcompanion/static/css/main.5f361e03.chunk.css",
+    "main.js": "/myrzabek/bcompanion/static/js/main.61cad4ef.chunk.js",
+    "main.js.map": "/myrzabek/bcompanion/static/js/main.61cad4ef.chunk.js.map",
+    "runtime-main.js": "/myrzabek/bcompanion/static/js/runtime-main.9ac0b29c.js",
+    "runtime-main.js.map": "/myrzabek/bcompanion/static/js/runtime-main.9ac0b29c.js.map",
+    "static/js/2.f165cc3c.chunk.js": "/myrzabek/bcompanion/static/js/2.f165cc3c.chunk.js",
+    "static/js/2.f165cc3c.chunk.js.map": "/myrzabek/bcompanion/static/js/2.f165cc3c.chunk.js.map",
+    "index.html": "/myrzabek/bcompanion/index.html",
+    "precache-manifest.6fd62564ff667cc49755827a9dbf2c49.js": "/myrzabek/bcompanion/precache-manifest.6fd62564ff667cc49755827a9dbf2c49.js",
+    "service-worker.js": "/myrzabek/bcompanion/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/myrzabek/bcompanion/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.f165cc3c.chunk.js.LICENSE.txt": "/myrzabek/bcompanion/static/js/2.f165cc3c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9ac0b29c.js",
+    "static/js/2.f165cc3c.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.61cad4ef.chunk.js"
+  ]
+}

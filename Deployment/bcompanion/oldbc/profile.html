@@ -1,0 +1,718 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>Профиль | BCompanion</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+  <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileColor" content="#3372DF">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+
+
+  <link rel="shortcut icon" href="images/favicon.png">
+
+  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+  <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+
+    .demo-card-square.mdl-card {
+      width: 360px;
+      height: 320px;
+      margin: 20px;
+    }
+
+    .demo-card-square>.mdl-card__title {
+      color: #fff;
+
+    }
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite; /* Safari */
+      animation: spin 2s linear infinite;
+      margin: 0 auto;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title" id="mainPageText">Авторизуйтесь</span>
+        <div class="mdl-layout-spacer"></div>
+
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+          <i class="material-icons">more_vert</i>
+        </button>
+        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+          <li class="mdl-menu__item">О нас</li>
+          <li class="mdl-menu__item">Связаться с нами</li>
+        </ul>
+      </div>
+    </header>
+    <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+      <header class="demo-drawer-header" id='profileSettings'>
+        <img src="https://i.ibb.co/VqncVzX/avatar.png" class="demo-avatar">
+        <div class="demo-avatar-dropdown">
+          <span id="account-details"></span>
+          <div class="mdl-layout-spacer"></div>
+          <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+            <i class="material-icons" role="presentation">arrow_drop_down</i>
+            <span class="visuallyhidden">Параметры</span>
+          </button>
+          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+            <li class="mdl-menu__item" id='editProfile'>Редактировать профиль</li>
+            <li class="mdl-menu__item" id='settingsProfile'>Настройки</li>
+            <li class="mdl-menu__item" id="sign-out-button">Выход</li>
+          </ul>
+        </div>
+      </header>
+      <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+        <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons"
+            role="presentation">home</i>Главная</a>
+        <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons"
+            role="presentation">inbox</i>Места</a>
+        <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons"
+            role="presentation">people</i>Группы</a>
+        <div class="mdl-layout-spacer"></div>
+        <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons"
+            role="presentation">help_outline</i><span class="visuallyhidden">Поддержка</span></a>
+      </nav>
+    </div>
+    <main class="mdl-layout__content mdl-color--grey-100">
+      <div class="mdl-grid demo-content">
+        <div class="mdl-color--white mdl-cell mdl-cell--12-col mdl-grid" id='page'>
+          <div class="loader"></div>
+          <!-- Container for the sign in -->
+          <div id="sign-in-card" style='display: none'
+            class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+            <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+              <h2 class="mdl-card__title-text" id='sign-in-card-text'>Введите номер телефона</h2>
+            </div>
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+              <form id="sign-in-form" action="#">
+                <!-- Input to enter the phone number -->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" pattern="\+[0-9\s\-\(\)]+" id="phone-number">
+                  <label class="mdl-textfield__label" for="phone-number">Введите номер телефона...</label>
+                  <span class="mdl-textfield__error">Вводимое значение должно начинаться с '+'</span>
+                </div>
+
+                <!-- Sign-in button -->
+                <button disabled class="mdl-button mdl-js-button mdl-button--raised" id="sign-in-button">Отправить
+                  код</button>
+              </form>
+
+
+              <form id="verification-code-form" action="#" style="display: none;">
+                <!-- Input to enter the verification code -->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="verification-code">
+                  <label class="mdl-textfield__label" for="verification-code">Введите код подтверждения...</label>
+                </div>
+
+                <!-- Button that triggers code verification -->
+                <input type="submit" class="mdl-button mdl-js-button mdl-button--raised" id="verify-code-button"
+                  value="Подтвердить" />
+                <!-- Button to cancel code verification -->
+                <button class="mdl-button mdl-js-button mdl-button--raised"
+                  id="cancel-verify-code-button">Отмена</button>
+              </form>
+            </div>
+          </div>
+          <!-- Container for the sign up -->
+          <div id="sign-up-card" style='display: none'
+            class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+            <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+              <h2 class="mdl-card__title-text" id='sign-in-card-text'>Зарегистрируйтесь</h2>
+            </div>
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+              <form id="sign-in-form" action="#">
+                <!-- Input to enter the name -->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="name" placeholder="Имя">
+                </div>
+                <!-- Input to enter the surname -->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="surname" placeholder="Фамилия">
+                </div>
+                <br>
+                <!-- Input to enter the dateofbrith -->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="dateOfBirth" placeholder="Дата рождения (00.00.00)">
+                </div>
+                <!-- Input to enter the city -->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="city" placeholder="Город, область">
+                </div>
+                <!-- Sign-in button -->
+                <button class="mdl-button mdl-js-button mdl-button--raised" id="sign-up-button">Готово</button>
+              </form>
+            </div>
+          </div>
+          <!-- Main page -->
+          <div id="header"></div>
+        </div>
+
+        <!--Main page-->
+      </div>
+  </div>
+  <!--END places page-->
+  <!-- Container for the sign in status and user info -->
+    <!-- <div id="signupform"
+      class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop"
+      style="display: none;">
+      <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+        <h2 class="mdl-card__title-text">User sign-in status</h2>
+      </div>
+      <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+        <div class="user-details-container">
+          Firebase sign-in status: <span id="sign-in-status">Unknown</span>
+          <div>
+            <input class="mdl-textfield__input" type='text' id='name' placeholder='Name'>
+            <br>
+            <input class="mdl-textfield__input" type='text' id='surname' placeholder='Surname'>
+            <br>
+            <input class="mdl-textfield__input" type='text' id='dateOfBirth' placeholder='Date of birth'>
+            <br>
+            <input class="mdl-textfield__input" type='text' id='city' placeholder='City'>
+            <br>
+            <button class="mdl-button mdl-js-button mdl-button--raised" id='signup'>Sign up</button>
+          </div>
+          <pre><code id="account-details"></code></pre>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  </div>
+  </main>
+  <!-- <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content">
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+            <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+              <use xlink:href="#piechart" mask="url(#piemask)" />
+              <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">82<tspan font-size="0.2" dy="-0.07">%</tspan></text>
+            </svg>
+            <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+              <use xlink:href="#piechart" mask="url(#piemask)" />
+              <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">82<tspan dy="-0.07" font-size="0.2">%</tspan></text>
+            </svg>
+            <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+              <use xlink:href="#piechart" mask="url(#piemask)" />
+              <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">82<tspan dy="-0.07" font-size="0.2">%</tspan></text>
+            </svg>
+            <svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
+              <use xlink:href="#piechart" mask="url(#piemask)" />
+              <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">82<tspan dy="-0.07" font-size="0.2">%</tspan></text>
+            </svg>
+          </div>
+          <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+            <svg fill="currentColor" viewBox="0 0 500 250" class="demo-graph">
+              <use xlink:href="#chart" />
+            </svg>
+            <svg fill="currentColor" viewBox="0 0 500 250" class="demo-graph">
+              <use xlink:href="#chart" />
+            </svg>
+          </div>
+          <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+            <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+              <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                <h2 class="mdl-card__title-text">Updates</h2>
+              </div>
+              <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                Non dolore elit adipisicing ea reprehenderit consectetur culpa.
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
+              </div>
+            </div>
+            <div class="demo-separator mdl-cell--1-col"></div>
+            <div class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
+              <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                <h3>View options</h3>
+                <ul>
+                  <li>
+                    <label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                      <input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Click per object</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label for="chkbox2" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                      <input type="checkbox" id="chkbox2" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Views per object</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label for="chkbox3" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                      <input type="checkbox" id="chkbox3" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Objects selected</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label for="chkbox4" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                      <input type="checkbox" id="chkbox4" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Objects viewed</span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50">Change location</a>
+                <div class="mdl-layout-spacer"></div>
+                <i class="material-icons">location_on</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main> -->
+  </div>
+
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyABazjsZ1nHoNiP1KyjRRyMyjIqSJI8fHc",
+      authDomain: "bcompanion-8fd26.firebaseapp.com",
+      databaseURL: "https://bcompanion-8fd26.firebaseio.com",
+      projectId: "bcompanion-8fd26",
+      storageBucket: "bcompanion-8fd26.appspot.com",
+      messagingSenderId: "430554304877",
+      appId: "1:430554304877:web:56bcac9e7839d1cde90a64"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script type="text/javascript">
+    /**
+     * Set up UI event listeners and registering Firebase auth listeners.
+     */
+    window.onload = function () {
+      // Listening for auth state changes.
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          // User is signed in.
+          var uid = user.uid;
+          var phoneNumber = user.phoneNumber;
+        }
+        updateSignInButtonUI();
+        updateSignInFormUI();
+        updateSignOutButtonUI();
+        updateSignedInUserStatusUI();
+        updateVerificationCodeFormUI();
+      });
+      // Event bindings.
+      document.getElementById('sign-out-button').addEventListener('click', onSignOutClick);
+      document.getElementById('phone-number').addEventListener('keyup', updateSignInButtonUI);
+      document.getElementById('phone-number').addEventListener('change', updateSignInButtonUI);
+      document.getElementById('verification-code').addEventListener('keyup', updateVerifyCodeButtonUI);
+      document.getElementById('verification-code').addEventListener('change', updateVerifyCodeButtonUI);
+      document.getElementById('verification-code-form').addEventListener('submit', onVerifyCodeSubmit);
+      document.getElementById('cancel-verify-code-button').addEventListener('click', cancelVerification);
+      // [START appVerifier]
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+        'size': 'invisible',
+        'callback': function (response) {
+          // reCAPTCHA solved, allow signInWithPhoneNumber.
+          onSignInSubmit();
+        }
+      });
+      // [END appVerifier]
+      recaptchaVerifier.render().then(function (widgetId) {
+        window.recaptchaWidgetId = widgetId;
+        updateSignInButtonUI();
+      });
+    };
+    /**
+     * Function called when clicking the Login/Logout button.
+     */
+
+    function onSignInSubmit() {
+      if (isPhoneNumberValid()) {
+        window.signingIn = true;
+        updateSignInButtonUI();
+        var phoneNumber = getPhoneNumberFromUserInput();
+        var appVerifier = window.recaptchaVerifier;
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then(function (confirmationResult) {
+            // SMS sent. Prompt user to type the code from the message, then sign the
+            // user in with confirmationResult.confirm(code).
+            window.confirmationResult = confirmationResult;
+            window.signingIn = false;
+            updateSignInButtonUI();
+            updateVerificationCodeFormUI();
+            updateVerifyCodeButtonUI();
+            updateSignInFormUI();
+          }).catch(function (error) {
+            // Error; SMS not sent
+            console.error('Error during signInWithPhoneNumber', error);
+            window.alert('Error during signInWithPhoneNumber:\n\n' +
+              error.code + '\n\n' + error.message);
+            window.signingIn = false;
+            updateSignInFormUI();
+            updateSignInButtonUI();
+          });
+      }
+    }
+    /**
+     * Function called when clicking the "Verify Code" button.
+     */
+    function onVerifyCodeSubmit(e) {
+      e.preventDefault();
+      if (!!getCodeFromUserInput()) {
+        window.verifyingCode = true;
+        updateVerifyCodeButtonUI();
+        var code = getCodeFromUserInput();
+        confirmationResult.confirm(code).then(function (result) {
+          // User signed in successfully.
+          var user = result.user;
+          window.verifyingCode = false;
+          window.confirmationResult = null;
+          updateVerificationCodeFormUI();
+        }).catch(function (error) {
+          // User couldn't sign in (bad verification code?)
+          console.error('Error while checking the verification code', error);
+          window.alert('Error while checking the verification code:\n\n' +
+            error.code + '\n\n' + error.message);
+          window.verifyingCode = false;
+          updateSignInButtonUI();
+          updateVerifyCodeButtonUI();
+        });
+      }
+    }
+    /**
+     * Cancels the verification code input.
+     */
+    function cancelVerification(e) {
+      e.preventDefault();
+      window.confirmationResult = null;
+      updateVerificationCodeFormUI();
+      updateSignInFormUI();
+    }
+    /**
+     * Signs out the user when the sign-out button is clicked.
+     */
+    function onSignOutClick() {
+      firebase.auth().signOut();
+    }
+    /**
+     * Reads the verification code from the user input.
+     */
+    function getCodeFromUserInput() {
+      return document.getElementById('verification-code').value;
+    }
+    /**
+     * Reads the phone number from the user input.
+     */
+    function getPhoneNumberFromUserInput() {
+      return document.getElementById('phone-number').value;
+    }
+    /**
+     * Returns true if the phone number is valid.
+     */
+    function isPhoneNumberValid() {
+      var pattern = /^\+[0-9\s\-\(\)]+$/;
+      var phoneNumber = getPhoneNumberFromUserInput();
+      return phoneNumber.search(pattern) !== -1;
+    }
+    /**
+     * Re-initializes the ReCaptacha widget.
+     */
+    function resetReCaptcha() {
+      if (typeof grecaptcha !== 'undefined' &&
+        typeof window.recaptchaWidgetId !== 'undefined') {
+        grecaptcha.reset(window.recaptchaWidgetId);
+      }
+    }
+    /**
+     * Updates the Sign-in button state depending on ReCAptcha and form values state.
+     */
+    function updateSignInButtonUI() {
+      document.getElementById('sign-in-button').disabled = !isPhoneNumberValid() ||
+        !!window.signingIn;
+    }
+    /**
+     * Updates the Verify-code button state depending on form values state.
+     */
+    function updateVerifyCodeButtonUI() {
+      document.getElementById('verify-code-button').disabled = !!window.verifyingCode ||
+        !getCodeFromUserInput();
+    }
+    /**
+     * Updates the state of the Sign-in form.
+     */
+    function updateSignInFormUI() {
+      if (firebase.auth().currentUser || window.confirmationResult) {
+        document.getElementById('sign-in-form').style.display = 'none';
+      } else {
+        resetReCaptcha();
+        document.getElementById('sign-in-form').style.display = 'block';
+      }
+    }
+    /**
+     * Updates the state of the Verify code form.
+     */
+    function updateVerificationCodeFormUI() {
+      if (!firebase.auth().currentUser && window.confirmationResult) {
+        document.getElementById('verification-code-form').style.display = 'block';
+        $('#sign-in-card-text').text('Введите код подтверждения');
+      } else {
+        document.getElementById('verification-code-form').style.display = 'none';
+      }
+    }
+    /**
+     * Updates the state of the Sign out button.
+     */
+    function updateSignOutButtonUI() {
+      if (firebase.auth().currentUser) {
+        document.getElementById('sign-out-button').style.display = 'block';
+        $('#profileSettings').fadeIn();
+      } else {
+        document.getElementById('sign-out-button').style.display = 'none';
+        $('#profileSettings').fadeOut();
+      }
+    }
+    /**
+     * Updates the Signed in user status panel.
+     */
+    function updateSignedInUserStatusUI() {
+      var user = firebase.auth().currentUser;
+      var $userInfo = $('#account-details');
+      if (user) {
+        $('#sign-in-card').fadeOut();
+        
+        $(function () {
+          
+          $.ajax({
+            type: 'GET',
+            url: 'https://stormy-escarpment-89406.herokuapp.com/users/getUser?phone_number=' +
+              encodeURIComponent(user.phoneNumber),
+            beforeSend: function(){
+              // Show image container
+              $(".loader").show();
+            },  
+            success: function (data) {
+              $userInfo.append('<span>' + data.name + ' ' + data.surname + '</span>');
+              $('#mainPageText').text('Главная');
+              $('#placesBlock').fadeIn();
+              $('#groupsBlock').fadeIn();
+              $('#page').load("header.html");
+            },
+            complete:function(data){
+              // Hide image container
+              $(".loader").hide();
+            },
+            error: function (error) {
+              $("#sign-up-card").fadeIn();
+            }
+
+          })
+        });
+      } else {
+        $('#sign-in-card').fadeIn();
+        $('#mainPageText').text('Авторизуйтесь');
+        $('#account-details').text('');
+        $('#placesBlock').fadeOut();
+        $('#groupsBlock').fadeOut();
+        $('.places').fadeOut();
+        $(".loader").hide();
+      }
+      $('#sign-up-button').click(function () {
+        var name = document.getElementById("name").value;
+        var surname = document.getElementById("surname").value;
+        var dateOfBirth = document.getElementById("dateOfBirth").value;
+        var city = document.getElementById("city").value;
+
+
+        var phoneNumber = user.phoneNumber;
+        var someData = {
+          "name": name,
+          "surname": surname,
+          "phoneNumber": phoneNumber,
+          "dateOfBirth": dateOfBirth,
+          "city": city
+        };
+
+        $(function () {
+          $.ajax({
+            type: 'POST',
+            data: JSON.stringify(someData),
+            url: 'https://stormy-escarpment-89406.herokuapp.com/users/authorize?auth_type=registration',
+            beforeSend: function(){
+              // Show image container
+              $(".loader").show();
+            },  
+            success: function (data, textStatus, jqXHR) {
+              $userInfo.append('<span>' + data.name + ' ' + data.surname + '</span>');
+              $('#sign-up-card').fadeOut();
+              $('#mainPageText').text('Главная');
+              $('#placesBlock').fadeIn();
+              $('#groupsBlock').fadeIn();
+            },
+            complete:function(data){
+              // Hide image container
+              $(".loader").hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              $('#account-details').text('Error');
+            }
+
+          })
+        });
+      });
+      $('#3').click(function(){
+            var $page = $('#page');
+
+            $.ajax({
+
+              type: 'GET',
+              url: 'https://stormy-escarpment-89406.herokuapp.com/places/byCity?city_name=Алматы',
+              success: function (data) {
+                $.each(data, function (index, item) {
+                  $page.append(
+                    "<div class='demo-card-square mdl-card mdl-shadow--2dp' id='placesBlock'>" +
+                    "<div class='mdl-card__title mdl-card--expand' style='background:" +
+                    "url(" + decodeURIComponent(item.placePhoto) +
+                    ") bottom right 15% no-repeat #46B6AC;'>" +
+                    "<h2 class='mdl-card__title-text'>" + item.placeName + "</h2>" +
+                    "</div>" +
+                    "<div class='mdl-card__supporting-text'></div>" +
+                    "<div class='mdl-card__actions mdl-card--border'>" +
+                    "<a class='mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' id='" +
+                    item.placeName + "'>" +
+                    "	  Выбрать" +
+                    "	</a></div></div>")
+                });
+
+              },
+              error: function (error) {
+                $("#page").fadeIn();
+              }
+
+            })
+          
+      });
+      $('#showCities').click(function () {
+        $(function () {
+          var $page = $('#page');
+          $.ajax({
+
+            type: 'GET',
+            url: 'https://stormy-escarpment-89406.herokuapp.com/cities',
+            beforeSend: function(){
+              $('#placesBlock').fadeOut();
+              $('#groupsBlock').fadeOut();
+              // Show image container
+              $(".loader").fadeIn();
+            },  
+            success: function (data) {
+              $.each(data, function (index, item) {
+                $page.append(
+                  "<div class='demo-card-square mdl-card mdl-shadow--2dp places'>" +
+                  "<div class='mdl-card__title mdl-card--expand' style='background:" +
+                  "url(" + decodeURIComponent(item.cityPhoto) +
+                  ") bottom right 15% no-repeat #46B6AC;'>" +
+                  "<h2 class='mdl-card__title-text'>" + item.cityName + "</h2>" +
+                  "</div>" +
+                  "<div class='mdl-card__supporting-text'></div>" +
+                  "<div class='mdl-card__actions mdl-card--border'>" +
+                  "<a class='mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' id='" +
+                  + index + "'>" +
+                  "	  Выбрать" +
+                  "	</a></div></div>"
+                  +"<script>"+
+                            "$('#"+index+"').click(function(){ alert('"+index+"'); })"+
+                            "</\script>");
+              });
+             
+          
+       
+
+              
+            },
+            complete:function(data){
+              // Hide image container
+              $(".loader").hide();
+            },
+            error: function (error) {
+              $("#page").fadeIn();
+            }
+
+          })
+        });
+        
+        
+      });
+      
+      
+
+    }
+    
+  </script>
+</body>
+
+</html>
